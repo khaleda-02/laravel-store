@@ -1,0 +1,12 @@
+useing the env('app') in not configuration files , it's not recommended . 
+the env just in config files , 
+
+why -> 
+in production we cache the config folder , 
+so by that the env will be non available 
+
+what to use to get the env values ->
+use config('key:app.name')
+
+video 03.1 40:00
+----------------------------------------------------------
