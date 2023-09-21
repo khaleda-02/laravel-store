@@ -17,7 +17,7 @@ video 03.1 40:00
 - Note : the above command will overwrite the web.php file 
 
 ---------------------------------------------------------- Commands --------------------------------------------------------
-php artisan route:list -> get all project's routes 
+php artisan route:list || php artisan r:l -> get all project's routes 
 php artisan db:seed    -> run database Seeds
  php artisan make:seeder CategoriesSeeder -> create seeder file    
 

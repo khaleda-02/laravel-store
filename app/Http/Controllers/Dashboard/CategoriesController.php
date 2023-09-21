@@ -62,7 +62,7 @@ class CategoriesController extends Controller
      */
     public function show(string $id)
     {
-        return view('dashboard.categories.show');
+        // return view('dashboard.categories.show');
     }
 
     /**
@@ -70,7 +70,13 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        return view('dashboard.categories.edit');
+        //! this query just will prevent the first level children 
+        $category = Category::findOrFail($id);
+        $parents = Category::where('id', '!=', $id)
+            ->where('parent_id', '!=', $category->id)
+            ->get();
+        //! NOTE: adding OR in the select query , orwhere instead of where 
+        return view('dashboard.categories.edit', compact('category', 'parents'));
     }
 
     /**
@@ -78,7 +84,12 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return view('dashboard.categories.update');
+        // dd('in updateaction');
+        $category = Category::findOrFail($id);
+        $category->update($request->all());
+        // $category->fill($request->all())->save();
+        // fill => just change the category obj here, nad don't reflect in db 
+        return Redirect::route('dashboard.categories.index');
     }
 
     /**
@@ -86,6 +97,7 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        return view('dashboard.categories.destroy');
+        Category::destroy($id);
+        return Redirect::route('dashboard.categories.index');
     }
 }

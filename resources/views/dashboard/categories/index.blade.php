@@ -40,7 +40,7 @@
                             class="btn btn-sm btn-primary">edit</a>
                     </td>
                     <td>
-                        <form action="{{ route('dashboard.categories.destroy', $category->id) }}">
+                        <form action="{{ route('dashboard.categories.destroy', $category->id) }}" method="POST">
                             @csrf
                             {{-- ! NOTE : Method Spoofing  --}}
                             {{-- <input type="submit" name="_methond" value="delete" /> --}}
