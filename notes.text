@@ -19,8 +19,8 @@ video 03.1 40:00
 ---------------------------------------------------------- Commands --------------------------------------------------------
 php artisan route:list || php artisan r:l -> get all project's routes 
 php artisan db:seed    -> run database Seeds
- php artisan make:seeder CategoriesSeeder -> create seeder file    
-
+php artisan make:seeder CategoriesSeeder -> create seeder file    
+php artisan storage:link -> IMP make a link (shortlink) in the public folder , so the images and file be accessible in public 
 ---------------------------------------------------------- files structure --------------------------------------------------------
 in controllers -> each domain in file | controllers Dashboard CategoryController.php
 in views       -> each controller has folder (file for : index , store , create ... ) | views dashboard categories index.blade.php 
@@ -28,3 +28,6 @@ in views       -> each controller has folder (file for : index , store , create 
 
 ** form method must be in ['post', 'get']
 ** redirect doesn't take route name , just the rout , recommended : Redirect::route(), or we use route(); 
+** Request merge  : the property will not be updated , if we tried to merge an exist property into the request , 
+** File Uploading Steps : store the files using public disk in the uploads folder , and then create a link for this folder in the public folder 
+** isset() : function return true if the var is exist and not null 

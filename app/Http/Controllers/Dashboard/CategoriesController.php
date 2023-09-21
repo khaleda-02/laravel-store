@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
@@ -26,7 +27,8 @@ class CategoriesController extends Controller
     public function create()
     {
         $parents = Category::all(); // this will return a Collection (special obj in php )
-        return view('dashboard.categories.create', compact('parents'));
+        $category = new Category(); // empty category for _form in create.blade.php
+        return view('dashboard.categories.create', compact('category', 'parents'));
     }
 
     /**
@@ -34,26 +36,12 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+
         //todo : validation 
-
-        //! NOTE : access the request params 
-        // $request->input('name');
-        // $request->post('name');
-        // $request->name;
-
-        //! Note:  $request->all();  // this called mass assignment , (all filed will be pass to the model , even if it was not a property )
-        // $request->only(['name', 'description']);
-        // $request->except(['name', 'description']);
-
-        //! NOTE : Request merge 
         $request->merge(['slug' => Str::slug($request->post('name'))]);
-
-
-        //! NOTE : PRG -> POST - Redirect - Get , it's mean after the post done we have to redirect the user to get 
-        //! (without using PRG ) user submit the form , back to the same page , if he submitted again it will create the same obj . 
-        // so we solve this by change the post to get 
-
-        $category = Category::create($request->all()); // NOTE this's mass assignment , solved in model , fillable 
+        $data = $request->except('image');
+        $data['image'] = $this->uploadImage($request);
+        Category::create($data);
         return Redirect::route('dashboard.categories.index');
     }
 
@@ -84,12 +72,23 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd('in updateaction');
         $category = Category::findOrFail($id);
-        $category->update($request->all());
+        $old_image = $category->image;
+        $data = $request->except('image');
+        $data['image'] = $this->uploadImage($request);
+        $category->update($data);
+
+        //todo delete the image from public using the right disk 
+        if ($old_image && $data['image']) {
+            // verify if the category was having an image , and it's different from the new image .
+            Storage::delete($old_image); // we cab specify the disk that we wanna to delete from , by this code :Storage::disk('local')->delete($old_image);
+        }
+
+        return Redirect::route('dashboard.categories.index');
+
+
         // $category->fill($request->all())->save();
         // fill => just change the category obj here, nad don't reflect in db 
-        return Redirect::route('dashboard.categories.index');
     }
 
     /**
@@ -97,7 +96,21 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        Category::destroy($id);
+        $category = Category::findOrFail($id);
+        $category->delete();
+        // NOTE : we still have the category object , even after the deletion , 
+        // and we put the image deletion after the category deletion , so if something happened and the category didn't delete , we don't need to delete the imag      
+        if ($category->image) {
+            Storage::delete($category->image);
+        }
         return Redirect::route('dashboard.categories.index');
+    }
+
+    protected function uploadImage(Request $request)
+    {
+        if (!$request->hasFile('image')) return;
+        $path  = $request->file('image')
+            ->store('uploads', 'public');
+        return $path;
     }
 }
