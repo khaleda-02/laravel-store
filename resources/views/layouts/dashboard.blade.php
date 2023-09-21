@@ -190,6 +190,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="info">
                             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                             <form action="{{ route('logout') }}" method="post">
+                                {{-- ! NOTE: action="{{ route('logout') }}"  -> we passed the route name in action --}}
+                                {{-- ! NOTE: to avoid the PageExpired , we use csrf token , to prevent the csrf attacks --}}
+                                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}" /> --}}
+                                {{-- {{ csrf_field() }} --}}
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-primary">Logout</button>
                             </form>
@@ -211,7 +215,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 @include('layouts.partials.sidebar', ['active' => 'dash'])
-                {{-- ['active'=>'dash']==>passsingvaluestotheview[layout->view] --}}
+                {{-- ['active'=>'dash']==>passsing values to the view [layout->view] --}}
             </div>
             <!-- /.sidebar -->
         </aside>
@@ -226,6 +230,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
+                                {{-- ! NOTE : we can add section here and in the child  we can append to this section , like in dashoard.index --}}
                                 @section('breadcrumb')
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 @show
@@ -275,6 +280,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    {{-- ! NOTE: to allow the child commponents adding theirs scripts --}}
     @stack('scripts')
 </body>
 

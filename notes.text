@@ -9,4 +9,22 @@ what to use to get the env values ->
 use config('key:app.name')
 
 video 03.1 40:00
-----------------------------------------------------------
+---------------------------------------------------------- Breeze --------------------------------------------------------
+- Breeze it's a dev dependency  
+- download -> composer require laravel/breeze --dev 
+- Usage -> usering artisan : php artisan breeze:install 
+- removing -> composer remove laravel/breeze 
+- Note : the above command will overwrite the web.php file 
+
+---------------------------------------------------------- Commands --------------------------------------------------------
+php artisan route:list -> get all project's routes 
+php artisan db:seed    -> run database Seeds
+ php artisan make:seeder CategoriesSeeder -> create seeder file    
+
+---------------------------------------------------------- files structure --------------------------------------------------------
+in controllers -> each domain in file | controllers Dashboard CategoryController.php
+in views       -> each controller has folder (file for : index , store , create ... ) | views dashboard categories index.blade.php 
+
+
+** form method must be in ['post', 'get']
+** redirect doesn't take route name , just the rout , recommended : Redirect::route(), or we use route(); 

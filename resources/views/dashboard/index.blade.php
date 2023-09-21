@@ -2,6 +2,12 @@
 
 @section('title', 'tests')
 
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item"><a href="#">test</a></li>
+@endsection
+
+
 @section('content')
     <div class="row">
         <div class="col-lg-6">
