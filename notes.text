@@ -19,6 +19,8 @@ video 03.1 40:00
 ---------------------------------------------------------- Commands --------------------------------------------------------
 php artisan route:list || php artisan r:l -> get all project's routes 
 php artisan db:seed    -> run database Seeds
+php artisan make:request RequestName-> create a custom request 
+php artisan make:rule FilterName -> create a custom rule filter
 php artisan make:seeder CategoriesSeeder -> create seeder file    
 php artisan storage:link -> IMP make a link (shortlink) in the public folder , so the images and file be accessible in public 
 ---------------------------------------------------------- files structure --------------------------------------------------------
@@ -31,6 +33,19 @@ in views       -> each controller has folder (file for : index , store , create 
 ** Request merge  : the property will not be updated , if we tried to merge an exist property into the request , 
 ** File Uploading Steps : store the files using public disk in the uploads folder , and then create a link for this folder in the public folder 
 ** isset() : function return true if the var is exist and not null 
+---------------------------------------------------------- Custom Validation --------------------------------------------------------
+1- in the rules function in model : [
+    'name' => [
+      'required' ,
+      function ($attribute , $value , $fails){
+        if($value == "custom") $fails('message );
+      } 
+    ]
+  ] 
+    
+2- create custom rule using : php artisan make:rule RuleName , and implement the pass function in the class 
+3- extend the Validator facade in the appProvider  , in boot funciton 
+
 
 ---------------------------------------------------------- References --------------------------------------------------------
 custom validation messages : 06.1 1:10 
@@ -38,10 +53,10 @@ custom validation messages : 06.1 1:10
 //todo 
 1- validation in controller DONE 
 2- error in blade [in style class , the error message (feedback)] DONE 
-3- old('inputName',defaultValue)
-4- move the rules into the model 
-5- unique 57
-
+3- old('inputName',defaultValue) DONE 
+4- move the rules into the model DONE 
+5- unique 06.1 57
+6- custom rule 06.2
 
 
 

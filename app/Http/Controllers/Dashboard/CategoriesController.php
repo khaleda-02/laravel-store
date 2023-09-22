@@ -38,14 +38,7 @@ class CategoriesController extends Controller
     {
 
         //validation 
-        $request->validate([
-            // name of the form input , validation array 
-            'name' => ['required', 'string', 'min:4', 'max:255'],
-            'parent_id' => ['nullable', 'int', 'exists:categories,parent_id'],
-            'status' => ['required', 'in:active,archived'],
-            'image' => ['required', 'image', 'max:1048576']
-
-        ]); //NOTE : this validation fun return the checked data (just : name , parent_id , status , image)
+        $request->validate(Category::rules(true)); //NOTE : this validation fun return the checked data (just : name , parent_id , status , image)
 
         $request->merge(['slug' => Str::slug($request->post('name'))]);
         $data = $request->except('image');
@@ -81,6 +74,8 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate(Category::rules(false));
+
         $category = Category::findOrFail($id);
         $old_image = $category->image;
         $data = $request->except('image');
@@ -88,7 +83,6 @@ class CategoriesController extends Controller
         if ($new_path)
             $data['image'] = $new_path;
 
-        // dd($data);
         $category->update($data);
 
         //todo delete the image from public using the right disk 
