@@ -31,3 +31,17 @@ in views       -> each controller has folder (file for : index , store , create 
 ** Request merge  : the property will not be updated , if we tried to merge an exist property into the request , 
 ** File Uploading Steps : store the files using public disk in the uploads folder , and then create a link for this folder in the public folder 
 ** isset() : function return true if the var is exist and not null 
+
+---------------------------------------------------------- References --------------------------------------------------------
+custom validation messages : 06.1 1:10 
+
+//todo 
+1- validation in controller DONE 
+2- error in blade [in style class , the error message (feedback)] DONE 
+3- old('inputName',defaultValue)
+4- move the rules into the model 
+5- unique 57
+
+
+
+

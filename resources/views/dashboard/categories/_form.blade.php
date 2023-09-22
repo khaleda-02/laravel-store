@@ -1,6 +1,11 @@
 <div class="form-group">
     <label> Category Name </label>
-    <input type="text" name="name" class="form-control" value="{{ $category->name }}">
+    <input type="text" name="name" @class(['form-control', 'is-invalid' => $errors->has('name')]) value="{{ $category->name }}">
+    @error('name')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
 
 <div class="form-group">

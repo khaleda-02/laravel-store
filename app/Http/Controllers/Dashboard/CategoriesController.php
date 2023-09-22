@@ -37,7 +37,16 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
 
-        //todo : validation 
+        //validation 
+        $request->validate([
+            // name of the form input , validation array 
+            'name' => ['required', 'string', 'min:4', 'max:255'],
+            'parent_id' => ['nullable', 'int', 'exists:categories,parent_id'],
+            'status' => ['required', 'in:active,archived'],
+            'image' => ['required', 'image', 'max:1048576']
+
+        ]); //NOTE : this validation fun return the checked data (just : name , parent_id , status , image)
+
         $request->merge(['slug' => Str::slug($request->post('name'))]);
         $data = $request->except('image');
         $data['image'] = $this->uploadImage($request);
@@ -75,11 +84,15 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $old_image = $category->image;
         $data = $request->except('image');
-        $data['image'] = $this->uploadImage($request);
+        $new_path = $this->uploadImage($request);
+        if ($new_path)
+            $data['image'] = $new_path;
+
+        // dd($data);
         $category->update($data);
 
         //todo delete the image from public using the right disk 
-        if ($old_image && $data['image']) {
+        if ($old_image && isset($data['image'])) {
             // verify if the category was having an image , and it's different from the new image .
             Storage::delete($old_image); // we cab specify the disk that we wanna to delete from , by this code :Storage::disk('local')->delete($old_image);
         }
@@ -105,6 +118,7 @@ class CategoriesController extends Controller
         }
         return Redirect::route('dashboard.categories.index');
     }
+
 
     protected function uploadImage(Request $request)
     {
