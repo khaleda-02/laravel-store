@@ -1,18 +1,11 @@
-{{ $errors }}
-
 @foreach ($errors as $error)
     <div class="danger">
         <p class="danger">{{ $error->first() }}</p>
     </div>
 @endforeach
+
 <div class="form-group">
-    <label> Category Name </label>
-    <input type="text" name="name" @class(['form-control', 'is-invalid' => $errors->has('name')]) value="{{ old('name', $category->name) }}">
-    @error('name')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror
+    <x-form.input title="Category Name " type='text' name="name" :value="$category->name" />
 </div>
 
 <div class="form-group">
@@ -27,8 +20,7 @@
 
 
 <div class="form-group">
-    <label> Category Description</label>
-    <textarea name="description" class="form-control">{{ old('description', $category->description) }}</textarea>
+    <x-form.textarea title="Category Description" name="description" :value="$category->description" />
 </div>
 
 
@@ -51,8 +43,7 @@
 </div>
 
 <div class="form-group">
-    <label> Category image</label>
-    <input type="file" name="image" class="form-control" />
+    <x-form.input title="Category image" type='file' name="image" />
 </div>
 @if ($category->image)
     <div class="mb-5">

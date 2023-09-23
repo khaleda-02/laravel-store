@@ -23,6 +23,7 @@ php artisan make:request RequestName-> create a custom request
 php artisan make:rule FilterName -> create a custom rule filter
 php artisan make:seeder CategoriesSeeder -> create seeder file    
 php artisan storage:link -> IMP make a link (shortlink) in the public folder , so the images and file be accessible in public 
+php artisan make:component alert -> create a blade component
 ---------------------------------------------------------- files structure --------------------------------------------------------
 in controllers -> each domain in file | controllers Dashboard CategoryController.php
 in views       -> each controller has folder (file for : index , store , create ... ) | views dashboard categories index.blade.php 
@@ -45,18 +46,26 @@ in views       -> each controller has folder (file for : index , store , create 
     
 2- create custom rule using : php artisan make:rule RuleName , and implement the pass function in the class 
 3- extend the Validator facade in the appProvider  , in boot funciton 
+---------------------------------------------------------- Blade Component --------------------------------------------------------
+- with the command : php artisan make:component alert , we can create the component . 
+- thee's two types of components : 
+    anonyms no class : php artisan make:component alert --view , 
+    with a class 
 
 
 ---------------------------------------------------------- References --------------------------------------------------------
 custom validation messages : 06.1 1:10 
+unique 06.1 57
+custom rule 06.2
+
 
 //todo 
-1- validation in controller DONE 
-2- error in blade [in style class , the error message (feedback)] DONE 
-3- old('inputName',defaultValue) DONE 
-4- move the rules into the model DONE 
-5- unique 06.1 57
-6- custom rule 06.2
+1- component in subfolder  :form input || @props('type' => 'textDefaultValue, ....) || 
+2- {{ attributes }} ==> it will pass all attribute from the <x-from.input/> to the component , except the attributes that defined in the @props 
+3- $slot it's like the children in react 
+4- 
+5- 
+6- 
 
 
 
