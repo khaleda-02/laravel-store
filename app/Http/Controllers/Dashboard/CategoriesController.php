@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,6 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::all(); // this will return a Collection (special obj in php )
-        // dd($categories);
         return view('dashboard.categories.index', compact('categories'));
     }
 
@@ -26,7 +26,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $parents = Category::all(); // this will return a Collection (special obj in php )
+        $parents = Category::all(); 
         $category = new Category(); // empty category for _form in create.blade.php
         return view('dashboard.categories.create', compact('category', 'parents'));
     }
@@ -36,9 +36,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-
-        //validation 
-        $request->validate(Category::rules(true)); //NOTE : this validation fun return the checked data (just : name , parent_id , status , image)
+        $request->validate(Category::rules()); //NOTE : this validation fun return the checked data (just : name , parent_id , status , image)
 
         $request->merge(['slug' => Str::slug($request->post('name'))]);
         $data = $request->except('image');
@@ -60,12 +58,9 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        //! this query just will prevent the first level children 
         $category = Category::findOrFail($id);
         $parents = Category::where('id', '!=', $id)
-            ->where('parent_id', '!=', $category->id)
             ->get();
-        //! NOTE: adding OR in the select query , orwhere instead of where 
         return view('dashboard.categories.edit', compact('category', 'parents'));
     }
 

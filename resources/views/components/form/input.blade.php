@@ -1,7 +1,7 @@
 @props(['title', 'type' => 'text', 'name', 'value' => ''])
 
 <label> {{ $title }}</label>
-<input :type="type" :name="$name" value="{{ old($name, $value) }}"
+<input type="{{ $type }}" name="{{ $name }}" value="{{ old($name, $value) }}"
     {{ $attributes->class(['form-control', 'is-invalid' => $errors->has($name)]) }} />
 @error($name)
     <div class="invalid-feedback">
