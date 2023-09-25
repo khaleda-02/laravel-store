@@ -10,7 +10,7 @@ return [
   [
     'title' => 'categories',
     'icon' => 'nav-icon fas fa-th',
-    'route' => 'dashboard.categories.index',
+    'route' => 'dashboard.jcategories.index',
     'active' => ''
   ],
 ];

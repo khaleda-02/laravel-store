@@ -17,13 +17,14 @@ video 03.1 40:00
 - Note : the above command will overwrite the web.php file 
 
 ---------------------------------------------------------- Commands --------------------------------------------------------
-php artisan route:list || php artisan r:l -> get all project's routes 
-php artisan db:seed    -> run database Seeds
-php artisan make:request RequestName-> create a custom request 
-php artisan make:rule FilterName -> create a custom rule filter
-php artisan make:seeder CategoriesSeeder -> create seeder file    
-php artisan storage:link -> IMP make a link (shortlink) in the public folder , so the images and file be accessible in public 
-php artisan make:component alert -> create a blade component
+- php artisan route:list || php artisan r:l -> get all project's routes 
+- php artisan db:seed    -> run database Seeds
+- php artisan make:request RequestName-> create a custom request 
+- php artisan make:rule FilterName -> create a custom rule filter
+- php artisan make:seeder CategoriesSeeder -> create seeder file    
+- php artisan storage:link -> IMP make a link (shortlink) in the public folder , so the images and file be accessible in public 
+- php artisan make:component alert -> create a blade component
+- php artisan vendor:publish --tag=laravel-pagination => make a editable copy of the laravel-pagination lib 
 ---------------------------------------------------------- files structure --------------------------------------------------------
 in controllers -> each domain in file | controllers Dashboard CategoryController.php
 in views       -> each controller has folder (file for : index , store , create ... ) | views dashboard categories index.blade.php 
@@ -51,6 +52,8 @@ in views       -> each controller has folder (file for : index , store , create 
 - thee's two types of components : 
     anonyms no class : php artisan make:component alert --view , 
     with a class 
+- {{ attributes }} ==> it will pass all attribute from the <x-from.input/> to the component , except the attributes that defined in the @props 
+- $slot it's like the children in react 
 
 
 ---------------------------------------------------------- References --------------------------------------------------------
@@ -60,9 +63,9 @@ custom rule 06.2
 
 
 //todo 
-1- component in subfolder  :form input || @props('type' => 'textDefaultValue, ....) || 
-2- {{ attributes }} ==> it will pass all attribute from the <x-from.input/> to the component , except the attributes that defined in the @props 
-3- $slot it's like the children in react 
+1- 
+2- 
+3- 
 4- 
 5- 
 6- 

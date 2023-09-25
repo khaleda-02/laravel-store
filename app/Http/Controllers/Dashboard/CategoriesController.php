@@ -17,7 +17,18 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all(); // this will return a Collection (special obj in php )
+        $request = request();
+        $query = Category::query();
+        if ($name = $request->query('name')) {
+            $query->where('name', 'like', "%{$name}%");
+        }
+
+        if ($status = $request->query('status')) {
+            $query->whereStatus($status);
+        }
+
+        $categories = $query->paginate(4); // this will return a Collection (special obj in php )
+        // $categories = Category::simplePaginate(4);
         return view('dashboard.categories.index', compact('categories'));
     }
 
@@ -26,7 +37,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $parents = Category::all(); 
+        $parents = Category::all();
         $category = new Category(); // empty category for _form in create.blade.php
         return view('dashboard.categories.create', compact('category', 'parents'));
     }

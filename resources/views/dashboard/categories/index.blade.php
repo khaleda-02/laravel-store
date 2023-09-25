@@ -14,6 +14,16 @@
         <a href="{{ route('dashboard.categories.create') }}" class="btn btn-sm btn-outline-primary">create</a>
     </div>
 
+    <form action="{{ URL::current() }}" method="get" class="d-flex justify-center">
+        <x-form.input name="name" :value="request('name')" placeholder="category name" class="form-control mx-2" />
+        <select name="status" class="form-control mx-2">
+            <option value="">All</option>
+            <option value="active" @selected(request('status') == 'active')>active</option>
+            <option value="archived" @selected(request('status') == 'archived')>archived</option>
+        </select>
+        <button class="btn btn-dark" class="form-control mx-2">search</button>
+    </form>
+
     <table class="table">
         <thead>
             <tr>
@@ -21,6 +31,7 @@
                 <th>id</th>
                 <th>name</th>
                 <th>parent</th>
+                <th>status</th>
                 <th>created at </th>
                 <th colspan="2"></th>
             </tr>
@@ -32,6 +43,7 @@
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->parent_id }}</td>
+                    <td>{{ $category->status }}</td>
                     <td>{{ $category->created_at }}</td>
 
                     {{-- actions --}}
@@ -55,4 +67,7 @@
 
         </tbody>
     </table>
+    {{ $categories->withQueryString()->links() }}
+    {{-- NOTE : we can append value to the query , and we can specify the pagination links style (just for this file) by ->link(style.path) --}}
+
 @endSection
