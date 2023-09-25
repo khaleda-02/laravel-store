@@ -12,29 +12,19 @@ use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $request = request();
-        $query = Category::query();
-        if ($name = $request->query('name')) {
-            $query->where('name', 'like', "%{$name}%");
-        }
 
-        if ($status = $request->query('status')) {
-            $query->whereStatus($status);
-        }
-
-        $categories = $query->paginate(4); // this will return a Collection (special obj in php )
-        // $categories = Category::simplePaginate(4);
+        $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+            ->select(['categories.*', 'parents.name as parent_name'])
+            ->filter($request->query())
+            ->latest()
+            ->paginate(4); // this will return a Collection (special obj in php )
         return view('dashboard.categories.index', compact('categories'));
+        // $categories = Category::simplePaginate(4); NOTE : just in case we want to show (previous , next) instead of  showing the page numbers .
     }
 
-    /**
-     * Show the form for creating a new resource. -> just return the form , no creation here 
-     */
     public function create()
     {
         $parents = Category::all();
@@ -42,9 +32,6 @@ class CategoriesController extends Controller
         return view('dashboard.categories.create', compact('category', 'parents'));
     }
 
-    /**
-     * Store a newly created resource in storage. gettting the form data , and crate new instance here 
-     */
     public function store(Request $request)
     {
         $request->validate(Category::rules()); //NOTE : this validation fun return the checked data (just : name , parent_id , status , image)
@@ -56,17 +43,10 @@ class CategoriesController extends Controller
         return Redirect::route('dashboard.categories.index');
     }
 
-    /**
-     * Display the specified resource. get the info for a specific record 
-     */
     public function show(string $id)
     {
-        // return view('dashboard.categories.show');
     }
 
-    /**
-     * Show the form for editing the specified resource. , just the form 
-     */
     public function edit(string $id)
     {
         $category = Category::findOrFail($id);
@@ -75,9 +55,6 @@ class CategoriesController extends Controller
         return view('dashboard.categories.edit', compact('category', 'parents'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate(Category::rules(false));
@@ -100,26 +77,47 @@ class CategoriesController extends Controller
         return Redirect::route('dashboard.categories.index');
 
 
-        // $category->fill($request->all())->save();
+        // NOTE : $category->fill($request->all())->save();
         // fill => just change the category obj here, nad don't reflect in db 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $category = Category::findOrFail($id);
         $category->delete();
+
+        return Redirect::route('dashboard.categories.index');
+    }
+
+    public function trash(Request $request)
+    {
+        $categories = Category::onlyTrashed()
+            ->filter($request->query())
+            ->paginate();
+        return view('dashboard.categories.trash', compact('categories'));
+    }
+
+    public function restore($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        return Redirect::route('dashboard.categories.trash');
+    }
+
+    public function forceDelete($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+
         // NOTE : we still have the category object , even after the deletion , 
         // and we put the image deletion after the category deletion , so if something happened and the category didn't delete , we don't need to delete the imag      
         if ($category->image) {
             Storage::delete($category->image);
         }
-        return Redirect::route('dashboard.categories.index');
+        return Redirect::route('dashboard.categories.trash');
     }
 
-
+    //? HELPERS 
     protected function uploadImage(Request $request)
     {
         if (!$request->hasFile('image')) return;

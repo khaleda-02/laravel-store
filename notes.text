@@ -55,6 +55,13 @@ in views       -> each controller has folder (file for : index , store , create 
 - {{ attributes }} ==> it will pass all attribute from the <x-from.input/> to the component , except the attributes that defined in the @props 
 - $slot it's like the children in react 
 
+---------------------------------------------------------- scopes --------------------------------------------------------
+- to build a local scope, the name must start with scopeName . and the function take the builder
+- there's a built in scopes in laravel : latest('column name') => default based on the created at ,  orderBy('column name','DESC') 
+
+---------------------------------------------------------- SoftDelete --------------------------------------------------------
+- to access the deleted categories : in the select statement pipeline add ->withTrashed()  
+- there's also the ->onlyTrashed() , 
 
 ---------------------------------------------------------- References --------------------------------------------------------
 custom validation messages : 06.1 1:10 
@@ -69,6 +76,6 @@ custom rule 06.2
 4- 
 5- 
 6- 
-
+7- 
 
 

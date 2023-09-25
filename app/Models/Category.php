@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     // white list : pass those fields to the create 
     protected $fillable = [
@@ -26,5 +28,15 @@ class Category extends Model
             'status' => ['required', 'in:active,archived'],
             'image' => [$requireImage ? 'required' : 'nullable', 'image']
         ];
+    }
+    //? Scopes 
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        $builder->when($filters['name'] ?? false, function ($builder, $value) {
+            $builder->where('categories.name', 'like', "%{$value}%");
+        });
+        $builder->when($filters['status'] ?? false, function ($builder, $value) {
+            $builder->where('categories.status', '=', $value);
+        });
     }
 }
