@@ -1,25 +1,23 @@
-@php
-    $links = config('sidebar');
-@endphp
-
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        {{-- @foreach ($links as $link)
-            <li class="nav-item ">
-                <a href="{{ view($link['route']) }}" class="nav-link active">
-                    <i class="{{ $link['icon'] }}"></i>
-                    <p>
-                        {{ $link['title'] }}
-                    </p>
-                </a>
-            </li>
-            @endforeach --}}
         <li class="nav-item ">
-            <a href="#" class="nav-link active">
-                <i class=""></i>
-                <p>
-                    test
-                </p>
+            <a href="{{ route('home') }}" class="nav-link {{ Route::currentRouteName() === 'home' ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Home</p>
+            </a>
+        </li>
+        <li class="nav-item ">
+            <a href="{{ route('dashboard.categories.index') }}"
+                class="nav-link  {{ Route::currentRouteName() == 'dashboard.categories.index' ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>categories</p>
+            </a>
+        </li>
+        <li class="nav-item ">
+            <a href="{{ route('dashboard.products.index') }}"
+                class="nav-link  {{ Route::currentRouteName() == 'dashboard.products.index' ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>products</p>
             </a>
         </li>
     </ul>

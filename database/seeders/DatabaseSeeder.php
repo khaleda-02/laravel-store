@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         
         //! Factories
         // Store::factory(5)->create();
-        // Category::factory(10)->create();
+        // Category::factory(10)->create(); 
         // Product::factory(100)->create();
     }
 }

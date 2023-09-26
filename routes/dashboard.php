@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\Dashboard\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')
@@ -16,6 +17,9 @@ Route::middleware('auth')
     Route::put('/categories/{category}/restore', [CategoriesController::class, 'restore'])->name('categories.restore');
     Route::delete('/categories/{category}/force-delete', [CategoriesController::class, 'forceDelete'])->name('categories.force-delete');
     Route::resource('/categories', CategoriesController::class); // must be in most bottom , to avoid the conflict . 
+
+    //? Products Routes 
+    Route::resource('/products', ProductsController::class);
   });
 
 //?  IN Resource : the name of the route by default is the last word 

@@ -22,7 +22,6 @@ video 03.1 40:00
 - php artisan make:request RequestName-> create a custom request 
 - php artisan make:rule FilterName -> create a custom rule filter
 - php artisan make:seeder CategoriesSeeder -> create seeder file    
-- php artisan storage:link -> IMP make a link (shortlink) in the public folder , so the images and file be accessible in public 
 - php artisan make:component alert -> create a blade component
 - php artisan vendor:publish --tag=laravel-pagination => make a editable copy of the laravel-pagination lib 
 ---------------------------------------------------------- files structure --------------------------------------------------------
@@ -58,6 +57,7 @@ in views       -> each controller has folder (file for : index , store , create 
 ---------------------------------------------------------- scopes --------------------------------------------------------
 - to build a local scope, the name must start with scopeName . and the function take the builder
 - there's a built in scopes in laravel : latest('column name') => default based on the created at ,  orderBy('column name','DESC') 
+- to create a global scope on a model , implement the booted function , and use addGlobalScope
 
 ---------------------------------------------------------- SoftDelete --------------------------------------------------------
 - to access the deleted categories : in the select statement pipeline add ->withTrashed()  
