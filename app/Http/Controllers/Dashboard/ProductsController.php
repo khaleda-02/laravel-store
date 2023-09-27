@@ -10,7 +10,8 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(20);
+        $products = Product::with(['store', 'category'])->paginate(20); 
+        // $products = Product::paginate(); //!NOTE: heavy memory consuming (it's load all found data on memory) , too many select statements
         return view('dashboard.products.index', compact('products'));
     }
 

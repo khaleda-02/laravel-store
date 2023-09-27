@@ -41,8 +41,8 @@
                 <tr>
                     <td><img src="{{ asset('storage/' . $product->image) }}" alt="" height="50"></td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->store_id }}</td>
-                    <td>{{ $product->category_id }}</td>
+                    <td>{{ $product->store->name }}</td>
+                    <td>{{ $product->category->name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->status }}</td>
                 </tr>
@@ -56,3 +56,11 @@
     {{-- NOTE : we can append value to the query , and we can specify the pagination links style (just for this file) by ->link(style.path) --}}
 
 @endSection
+{{-- ! NOTE: in case that the function in controller looks like this: $products = Product::paginate() --}}
+{{-- we can get the store , category data  by accessing the relation --}}
+{{-- Recommended :   <td>{{ $product->store->name }}</td> --}}
+{{-- <td>{{ $product->store()->first()->name }}</td> --}}
+
+{{-- ! but we can use egear loading for enhancing the performance --}}
+{{-- in controller Product::with('store', 'category')->paginate(20);  --}}
+{{-- Recommended :   <td>{{ $product->store->name }}</td> --}}

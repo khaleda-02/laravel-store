@@ -1,4 +1,5 @@
 <nav class="mt-2">
+    <h2 class="text-primary text-capitalize">{{ Auth::user()->name }}</h2>
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item ">
             <a href="{{ route('home') }}" class="nav-link {{ Route::currentRouteName() === 'home' ? 'active' : '' }}">

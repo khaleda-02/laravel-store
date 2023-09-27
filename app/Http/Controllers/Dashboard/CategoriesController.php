@@ -16,11 +16,19 @@ class CategoriesController extends Controller
     {
         $request = request();
 
-        $categories = Category::leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
+        $categories = Category::
+            // with('parent') // using model's relation 
+            leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
             ->select(['categories.*', 'parents.name as parent_name'])
+            ->withCount([
+                'products as products_num' => function ($query) {
+                    $query->where('status', '=', 'active');
+                }
+            ])
+            //NOTE: ->selectRaw('(select count(*) from products where products.id = categories.id) as products_num')
             ->filter($request->query())
             ->latest()
-            ->paginate(4); // this will return a Collection (special obj in php )
+            ->paginate(); // this will return a Collection (special obj in php )
         return view('dashboard.categories.index', compact('categories'));
         // $categories = Category::simplePaginate(4); NOTE : just in case we want to show (previous , next) instead of  showing the page numbers .
     }
@@ -43,9 +51,13 @@ class CategoriesController extends Controller
         return Redirect::route('dashboard.categories.index');
     }
 
-    public function show(string $id)
+    public function show(Category $category)
     {
+        // $products = $category->with(['products'])->with(['store'])->dd();
+        $products = $category->products()->with(['store']);
     }
+
+
 
     public function edit(string $id)
     {

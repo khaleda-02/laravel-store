@@ -32,6 +32,7 @@
                 <th>id</th>
                 <th>name</th>
                 <th>parent</th>
+                <th>products </th>
                 <th>status</th>
                 <th>created at </th>
                 <th colspan="2"></th>
@@ -42,8 +43,9 @@
                 <tr>
                     <td><img src="{{ asset('storage/' . $category->image) }}" alt="" height="50"></td>
                     <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
+                    <td><a href="{{ route('dashboard.categories.show', $category->id) }}">{{ $category->name }}</a> </td>
                     <td>{{ $category->parent_name }}</td>
+                    <td>{{ $category->products_num }}</td>
                     <td>{{ $category->status }}</td>
                     <td>{{ $category->created_at }}</td>
 
@@ -62,7 +64,7 @@
                         </form>
                     </td>
                 </tr>
-            @empty 
+            @empty
                 <h1>NoCategory Founded</h1>
             @endforelse
 

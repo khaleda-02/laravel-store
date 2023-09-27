@@ -19,4 +19,15 @@ class Product extends Model
             }
         });
     }
+
+    //? Relations 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id')->withDefault();
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id', 'id')->withDefault();
+    }
 }
