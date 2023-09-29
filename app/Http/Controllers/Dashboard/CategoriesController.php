@@ -33,6 +33,18 @@ class CategoriesController extends Controller
         // $categories = Category::simplePaginate(4); NOTE : just in case we want to show (previous , next) instead of  showing the page numbers .
     }
 
+    public function show(Category $category)
+    {
+        // $products = $category->products()->with(['store'])->paginate();
+        $products = $category->products()->with(['store'])->paginate();
+        // dd($products);
+        return view('dashboard.categories.show', compact(['products', 'category']));
+
+        //! $category->products() => return the relation ojb , which's mean that we can add more queries to it 
+        //! $category->products => will return the obj (category || product || store ) MODEL , [query on db , check if there's a relation , if yes return the obj ]
+        //! eger
+    }
+
     public function create()
     {
         $parents = Category::all();
@@ -50,14 +62,6 @@ class CategoriesController extends Controller
         Category::create($data);
         return Redirect::route('dashboard.categories.index');
     }
-
-    public function show(Category $category)
-    {
-        // $products = $category->with(['products'])->with(['store'])->dd();
-        $products = $category->products()->with(['store']);
-    }
-
-
 
     public function edit(string $id)
     {

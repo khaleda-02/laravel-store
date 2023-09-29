@@ -1,6 +1,7 @@
 <?php
 //! command : php artisan route:list
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index');
-    // return "dashboard.index";
+Route::middleware('auth')->get('/', function () {
+    return Redirect::route('dashboard.home');
 })->name('home');
 
 Route::middleware('auth')->group(function () {
