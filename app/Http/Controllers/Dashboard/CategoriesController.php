@@ -37,7 +37,6 @@ class CategoriesController extends Controller
     {
         // $products = $category->products()->with(['store'])->paginate();
         $products = $category->products()->with(['store'])->paginate();
-        // dd($products);
         return view('dashboard.categories.show', compact(['products', 'category']));
 
         //! $category->products() => return the relation ojb , which's mean that we can add more queries to it 

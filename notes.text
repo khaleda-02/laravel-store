@@ -70,12 +70,15 @@ custom rule 06.2
 
 
 //todo 
-1- 
-2- 
-3- 
-4- 
-5- 
+1- create model relations in profile , user 
+2- create the fillable array in profile 
+3- create controller for the profile 
+4- edit , update in controller 
+5- in update : validate the request 
 6- 
 7- 
 
+// To learn 
+1- model relations 
+2- facade in laravel 
 
