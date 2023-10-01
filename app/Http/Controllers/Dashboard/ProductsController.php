@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
@@ -31,14 +33,32 @@ class ProductsController extends Controller
 
     public function edit(Product $product)
     {
-        $tags = $product->tags;
+        $tags = implode(',', $product->tags()->pluck('name')->toArray());
+        // dd($tags);
+        // without pluck -> we will get the tags obj , so to get just the name of the obj , use pluck 
         return view('dashboard.products.edit', compact(['product', 'tags']));
     }
 
     public function update(Request $request, Product $product)
     {
         //todo $request->validate();
-        $product->update($request->all());
+        $tags = explode(',', $request->tags);
+        $tag_ids = [];
+
+        foreach ($tags as $tag_name) {
+            $tag_slug = Str::slug($tag_name);
+            $tag = Tag::updateOrCreate(
+                ['slug' => $tag_slug],
+                ['name' => $tag_name]
+            );
+            $tag_ids[] = $tag->id;
+        }
+
+
+        $product->update($request->except('tags'));
+        $product->tags()->sync($tag_ids);
+        //NOTE: we can use attach instead of sync in case we need to attach add , and the db will return an error in case the tag is exists already 
+        //NOTE: detach for removing , syncWithoutDetaching for add without remove .(attach alternative) 
         return Redirect::route('dashboard.products.index');
     }
 

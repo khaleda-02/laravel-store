@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'store_id', 'category_id', 'name', 'slug', 'description', 'image', 'price', 'compar_price',
+         'options', 'rating', 'featured', 'status'
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope('storeData', function (Builder $builder) {
