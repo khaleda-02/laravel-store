@@ -69,12 +69,12 @@ unique 06.1 57
 custom rule 06.2
 
 
-//todo 
-1- create model relations in profile , user 
-2- create the fillable array in profile 
-3- create controller for the profile 
-4- edit , update in controller 
-5- in update : validate the request 
+//todo : create a profile for the user , editable 
+1- add encytype to product form ,
+2- create fillable for product
+3- 
+4- 
+5- 
 6- 
 7- 
 

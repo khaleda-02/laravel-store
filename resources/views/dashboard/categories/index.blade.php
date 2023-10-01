@@ -65,7 +65,7 @@
                     </td>
                 </tr>
             @empty
-                <h1>NoCategory Founded</h1>
+                <tr>NoCategory Founded</tr>
             @endforelse
 
         </tbody>

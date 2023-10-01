@@ -20,7 +20,7 @@
 
 <div class="form-group">
     <label> Category status</label>
-    <x-form.status-radio :options="['active', 'archived']" value="active" checked="{{ $category->status }}" />
+    <x-form.status-radio :options="['active', 'archived']" value="{{ $category->status }}" checked="{{ $category->status }}" />
 </div>
 
 <div class="form-group">

@@ -1,4 +1,4 @@
-@props(['value', 'checked', 'options'])
+@props(['checked', 'options'])
 
 
 @foreach ($options as $value)

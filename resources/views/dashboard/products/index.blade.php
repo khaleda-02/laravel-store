@@ -15,16 +15,6 @@
         <a href="{{ route('dashboard.products.trash') }}" class="btn btn-sm btn-outline-danger mx-2 ">trash</a> --}}
     </div>
 
-    {{-- <form action="{{ URL::current() }}" method="get" class="d-flex justify-center">
-        <x-form.input name="name" :value="request('name')" placeholder="product name" class="form-control mx-2" />
-        <select name="status" class="form-control mx-2">
-            <option value="">All</option>
-            <option value="active" @selected(request('status') == 'active')>active</option>
-            <option value="archived" @selected(request('status') == 'archived')>archived</option>
-        </select>
-        <button class="btn btn-dark" class="form-control mx-2">search</button>
-    </form> --}}
-
     <table class="table">
         <thead>
             <tr>
@@ -45,9 +35,20 @@
                     <td>{{ $product->category->name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->status }}</td>
+                    <td>
+                        <a href="{{ route('dashboard.products.edit', $product->id) }}"
+                            class="btn btn-sm btn-primary">edit</a>
+                    </td>
+                    <td>
+                        <form action="{{ route('dashboard.products.destroy', $product->id) }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-danger"> delete</button>
+                        </form>
+                    </td>
                 </tr>
             @empty
-                <td colspan="7">NoCategory Founded</td>
+                <tr colspan="7">No Products Founded</tr>
             @endforelse
 
         </tbody>
