@@ -20,6 +20,7 @@
                         </div>
                     </div>
 
+                    
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-info">
                             <h2 class="title">{{ $product->name }}</h2>
