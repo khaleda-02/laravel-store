@@ -1,7 +1,9 @@
 <?php
 //! command : php artisan route:list
+
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->get('/', function () {
-    return Redirect::route('dashboard.home');
-})->name('home');
+// Route::middleware('auth')->get('/', function () {
+//     return Redirect::route('dashboard.home');
+// })->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/product/{product:slug}', [ProductsController::class, 'show'])->name('product.show');
+Route::get('/product', [ProductsController::class, 'index'])->name('product.index');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

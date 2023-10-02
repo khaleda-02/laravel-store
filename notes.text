@@ -82,3 +82,5 @@ custom rule 06.2
 1- model relations 
 2- facade in laravel 
 
+// TO ask : 
+1- when to use class based components , and none component .
