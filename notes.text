@@ -70,10 +70,10 @@ custom rule 06.2
 
 
 //todo 
-1- HomeController 
-2- download template 
-3- 
-4- 
+1- relations in model 
+2- implement getCookie function 
+3- use it as a global scope on Cart model 
+4- create controller 
 5- 
 6- 
 7- 

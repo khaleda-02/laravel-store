@@ -4,7 +4,7 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')
+Route::middleware(['auth', 'roles'])
   ->as('dashboard.')
   ->prefix('dashboard')
   ->group(function () {
@@ -23,5 +23,5 @@ Route::middleware('auth')
   });
 
 //?  IN Resource : the name of the route by default is the last word 
-//! NOTE: the name of this resource's routes (to avoid the conflict)-> last word + the actions  
+//! my_NOTE: the name of this resource's routes (to avoid the conflict)-> last word + the actions  
 //? categories.index , categories.create ... 

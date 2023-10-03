@@ -21,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFour();
-        // NOTE: to app a custom paginator style for the entire project : Paginator::defaultView(view.path);
+        // my_NOTE: to app a custom paginator style for the entire project : Paginator::defaultView(view.path);
     }
 }

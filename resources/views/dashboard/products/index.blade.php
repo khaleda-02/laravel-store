@@ -57,7 +57,7 @@
     {{-- NOTE : we can append value to the query , and we can specify the pagination links style (just for this file) by ->link(style.path) --}}
 
 @endSection
-{{-- ! NOTE: in case that the function in controller looks like this: $products = Product::paginate() --}}
+{{-- ! my_NOTE: in case that the function in controller looks like this: $products = Product::paginate() --}}
 {{-- we can get the store , category data  by accessing the relation --}}
 {{-- Recommended :   <td>{{ $product->store->name }}</td> --}}
 {{-- <td>{{ $product->store()->first()->name }}</td> --}}

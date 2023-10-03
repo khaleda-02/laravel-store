@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
-    //!NOTE: Eger loading heavy memory consuming (it's load all found data on memory) , too many select statements
+    //!my_NOTE: Eger loading heavy memory consuming (it's load all found data on memory) , too many select statements
     public function index()
     {
         $products = Product::with(['store', 'category'])->paginate(20);
@@ -57,8 +57,8 @@ class ProductsController extends Controller
 
         $product->update($request->except('tags'));
         $product->tags()->sync($tag_ids);
-        //NOTE: we can use attach instead of sync in case we need to attach add , and the db will return an error in case the tag is exists already 
-        //NOTE: detach for removing , syncWithoutDetaching for add without remove .(attach alternative) 
+        //my_NOTE: we can use attach instead of sync in case we need to attach add , and the db will return an error in case the tag is exists already 
+        //my_NOTE: detach for removing , syncWithoutDetaching for add without remove .(attach alternative) 
         return Redirect::route('dashboard.products.index');
     }
 

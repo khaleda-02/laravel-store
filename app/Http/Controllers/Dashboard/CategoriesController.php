@@ -25,7 +25,7 @@ class CategoriesController extends Controller
                     $query->where('status', '=', 'active');
                 }
             ])
-            //NOTE: ->selectRaw('(select count(*) from products where products.id = categories.id) as products_num')
+            //my_NOTE: ->selectRaw('(select count(*) from products where products.id = categories.id) as products_num')
             ->filter($request->query())
             ->latest()
             ->paginate(); // this will return a Collection (special obj in php )
