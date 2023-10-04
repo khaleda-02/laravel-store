@@ -17,7 +17,6 @@ class CategoriesController extends Controller
         $request = request();
 
         $categories = Category::
-            // with('parent') // using model's relation 
             leftJoin('categories as parents', 'parents.id', '=', 'categories.parent_id')
             ->select(['categories.*', 'parents.name as parent_name'])
             ->withCount([
@@ -35,7 +34,6 @@ class CategoriesController extends Controller
 
     public function show(Category $category)
     {
-        // $products = $category->products()->with(['store'])->paginate();
         $products = $category->products()->with(['store'])->paginate();
         return view('dashboard.categories.show', compact(['products', 'category']));
 
@@ -85,7 +83,6 @@ class CategoriesController extends Controller
 
         //todo delete the image from public using the right disk 
         if ($old_image && isset($data['image'])) {
-            // verify if the category was having an image , and it's different from the new image .
             Storage::delete($old_image); // we cab specify the disk that we wanna to delete from , by this code :Storage::disk('local')->delete($old_image);
         }
 

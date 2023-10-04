@@ -4,55 +4,67 @@ namespace App\Repos\Cart;
 
 use App\Models\Cart;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CartModelRepo implements CartRepo
 {
   public function get(): Collection
   {
-    return Cart::all();
+
+    return Cart::with('product')->get();
   }
 
-  public function add(Product $product, $quantity = 1)
+  public function add($product_id, $quantity = 1)
   {
-    Cart::create([
-      'user_id' => Auth::id(),
-      'product_id' => $product->id,
-      'quantity' => $quantity
-    ]);
+    $item =  Cart::where('product_id', '=', $product_id)
+      ->first();
+    if (!$item) {
+      $cart = Cart::create([
+        'user_id' => Auth::id(),
+        'product_id' => $product_id,
+        'quantity' => $quantity,
+      ]);
+      $this->get()->push($cart);
+      return $cart;
+    }
+
+    return $item->increment('quantity', $quantity);
+    // $cart = Cart::updateOrCreate(
+    //   ['product_id' => $product_id],
+    //   ['user_id' => Auth::id(), 'quantity' =>  DB::raw('quantity + ' . $quantity)]
+    // );
   }
 
-  public function update(Product $product, $quantity = 1)
+  public function update($product_id, $quantity = 1)
   {
-    Cart::where('product_id', $product->id)
+    Cart::where('product_id', $product_id)
       ->update([
         'quantity' => $quantity,
       ]);
   }
 
-  public function delete(Product $product)
+  public function delete($product_id)
   {
-    Cart::where('product_id', $product->id)->delete();
-  }
-  public function empty()
-  {
-    // Cart::delete();
-  }
-  public function total(): float
-  {
-    return 123.2;
-    Cart::join('products', 'products.id', '=', 'carts.product_id')
-      ->selectRaw('sum(product.price * carts.quantity) as total ')
-      ->value('total');
+    Cart::where('product_id', $product_id)->delete();
   }
 
-  //? helper methods 
-  protected function getCookieId()
+  public function empty()
   {
-    $cookie_id = Cookie::get('cart_id');
-     
+    Cart::query()->delete();
+  }
+
+  public function total(): float
+  {
+    // Cart::join('products', 'products.id', '=', 'carts.product_id')
+    //   ->selectRaw('sum(product.price * carts.quantity) as total ')
+    //   ->value('total');
+    return $this->get()->sum(function ($item) {
+      return $item->quantity * $item->product->price;
+    });
   }
 }
 
