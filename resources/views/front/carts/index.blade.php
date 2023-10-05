@@ -35,57 +35,52 @@
                                         src="{{ $item->product->image_url }}" alt="#"></a>
                             </div>
                             <div class="col-lg-4 col-md-3 col-12">
-                                <h5 class="product-name"><a href="product-details.html">
-                                        {{ $items->product->name }}</a></h5>
+                                <h5 class="product-name"><a href="{{ route('product.show', $item->product->slug) }}">
+                                        {{ $item->product->name }}</a></h5>
                                 <p class="product-des">
-                                    <span><em>Type:</em> {{ $items->product->price }}</span>
+                                    <span><em>Type:</em> {{ $item->product->price }}</span>
                                     {{-- <span><em>Color:</em> Black</span> --}}
                                 </p>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
                                 <div class="count-input">
-                                    <input type="number" class="form-control" name="quantity"
-                                        value="{{ $tiem->quantity }}" />
+                                    <p class="product-des">
+                                        {{ $item->quantity }}</p>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
-                                <p>$ {{ $items->product->price * $items->quantity }} </p>
+                                <p>$ {{ $item->product->price * $item->quantity }} </p>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
                                 <p>$29.00</p>
                             </div>
                             <div class="col-lg-1 col-md-2 col-12">
-                                <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
+                                <form method="post" action="{{ route('cart.destroy', $item->product->id) }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="remove-item"
+                                        href="{{ route('cart.destroy', $item->product->id) }}"><i
+                                            class="lni lni-close"></i>
+                                    </button>
+
+                                </form>
                             </div>
                         </div>
                     </div>
                 @endforeach
                 <!-- End Single List list -->
             </div>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-12">
-                    <!-- Total Amount -->
                     <div class="total-amount">
                         <div class="row">
-                            <div class="col-lg-8 col-md-6 col-12">
-                                <div class="left">
-                                    <div class="coupon">
-                                        <form action="#" target="_blank">
-                                            <input name="Coupon" placeholder="Enter Your Coupon">
-                                            <div class="button">
-                                                <button class="btn">Apply Coupon</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>Cart Subtotal<span>$2560.00</span></li>
-                                        <li>Shipping<span>Free</span></li>
-                                        <li>You Save<span>$29.00</span></li>
-                                        <li class="last">You Pay<span>$2531.00</span></li>
+                                        <li>Cart Subtotal: <span>${{ $cart->total() }}</span></li>
+                                        {{-- <li>Shipping<span>Free</span></li>
+                                        <li>You Save<span>$29.00</span></li> --}}
+                                        {{-- <li class="last">You Pay<span>$2531.00</span></li> --}}
                                     </ul>
                                     <div class="button">
                                         <a href="checkout.html" class="btn">Checkout</a>
@@ -95,7 +90,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--/ End Total Amount -->
                 </div>
             </div>
         </div>

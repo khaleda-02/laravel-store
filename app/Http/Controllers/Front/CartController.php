@@ -18,8 +18,7 @@ class CartController extends Controller
     public function index()
     {
         // $items = $this->cart->get();
-        // return view('front.carts.index', compact(['items']));
-        return view('front.carts.index', ['cart ' => $this->cart]);
+        return view('front.carts.index', ['cart' => $this->cart]);
     }
 
     public function store(Request $request)
@@ -30,7 +29,7 @@ class CartController extends Controller
         ]);
 
         $this->cart->add($request->product_id, $request->quantity);
-        return Redirect::route('cart.index');
+        return Redirect::back();
     }
 
 
@@ -47,5 +46,6 @@ class CartController extends Controller
     public function destroy(string $id)
     {
         $this->cart->delete($id); // $id is the product_id 
+        return Redirect::back();
     }
 }

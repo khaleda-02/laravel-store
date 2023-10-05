@@ -5,9 +5,15 @@
             <span class="sale-tag">-{{ $product->sale_tag }}%</span>
         @endif
         <div class="button">
-            <a href="product-details.html" class="btn"><i class="lni lni-cart"></i>
-                Add to
-                Cart</a>
+            <form action="{{ route('cart.store') }}" method="post">
+                @csrf
+                <input type="text" hidden value="{{ $product->id }}" name="product_id" />
+                <input type="number" hidden value="1" name="quantity" />
+
+                <button class="btn"><i class="lni lni-cart"></i>
+                    Add to
+                    Cart</button>
+            </form>
         </div>
     </div>
     <div class="product-info">

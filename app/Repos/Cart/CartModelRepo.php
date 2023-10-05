@@ -3,12 +3,8 @@
 namespace App\Repos\Cart;
 
 use App\Models\Cart;
-use App\Models\Product;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class CartModelRepo implements CartRepo
 {
@@ -49,6 +45,7 @@ class CartModelRepo implements CartRepo
 
   public function delete($product_id)
   {
+    // dd($product_id);
     Cart::where('product_id', $product_id)->delete();
   }
 
