@@ -12,6 +12,7 @@ Route::get('/product', [ProductsController::class, 'index'])->name('product.inde
 
 Route::resource('cart', CartController::class);
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

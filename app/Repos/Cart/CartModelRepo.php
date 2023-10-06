@@ -24,7 +24,6 @@ class CartModelRepo implements CartRepo
         'product_id' => $product_id,
         'quantity' => $quantity,
       ]);
-      $this->get()->push($cart);
       return $cart;
     }
 

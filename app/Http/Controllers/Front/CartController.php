@@ -17,7 +17,6 @@ class CartController extends Controller
 
     public function index()
     {
-        // $items = $this->cart->get();
         return view('front.carts.index', ['cart' => $this->cart]);
     }
 
@@ -33,7 +32,7 @@ class CartController extends Controller
     }
 
 
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         $request->validate([
             'product_id' => ['required', 'int', 'exists:products,id'],

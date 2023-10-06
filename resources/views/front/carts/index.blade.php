@@ -1,4 +1,4 @@
-<x-front-layout>
+<x-front-layout title="cart">
     <div class="shopping-cart section">
         <div class="container">
             <div class="cart-list-head">

@@ -70,8 +70,8 @@ custom rule 06.2
 
 
 //todo 
-1- 
-2- 
+1- make a class based component , and in the constructor arg , request the CartRepo (laravel will bind it from the appSrvice ) , then store it in cart varible , pass it to component .
+2- in the component get all the cart items using get() 
 3- 
 4- 
 5- 
@@ -84,3 +84,4 @@ custom rule 06.2
 
 // TO ask : 
 1- when to use class based components , and none component .
+2- when to create a custom facade 
